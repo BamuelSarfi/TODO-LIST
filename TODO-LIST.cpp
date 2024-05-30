@@ -1,3 +1,4 @@
+//written by @BamuelSarfi
 #include <iostream>
 #include <cstdlib>
 #include <string>
