@@ -3,6 +3,8 @@
 #include <cstdlib>
 #include <string>
 #include <vector>
+#include <fstream>
+
 
 using namespace std;
 
@@ -12,11 +14,11 @@ int main()
 	vector<string> todo;
 	string input;
 	
-	cout << "**Welcome to simple TODO list. type 'exit' at any time to escape**\nTo remove a todo, type 'rm' before the number of the todo.\nTo view todos at any time, type 'ls' to list them numerical order.\n";
+	cout << "**Welcome to simple TODO list. type 'exit' at any time to escape**\nTo remove a todo, type 'rm' before the number of the todo.\nTo view todos at any time, type 'ls' to list them numerical order.\nType 'print' to put the todos in a text file\n";
 	
-	while(true)
+	while (true)
 	{
-		
+
 		int x = 0;
 
 		cout << "Enter here >> ";
@@ -51,14 +53,28 @@ int main()
 			system("cls");
 			cout << "'exit' to escape, 'ls' to list todos, 'rm <number>' to remove todo items, 'clear' or 'cls' to clear screen.\n";
 		}
+		else if (input == "print" || input == "PRINT") {
+			string fileName;
+			cout << "Enter name for file >> ";
+			getline(cin, fileName);
+			
+			ofstream myFile(fileName + ".txt");
+			if (myFile.is_open() && todo.size() != 0) {
+				cout << fileName << ".txt\n";
+				for (x = 0; x < todo.size(); x++) {
+					myFile << x + 1 << ". " << todo[x] << "\n";
+				}
+				myFile.close();
+				cout << "File " << fileName << " created!\n";
+			}
+			else cout << "There is nothing to print. Try adding some todos\n";
+		}
 		else {
 			cout << todo.size() + 1 << ". " << input << "\n";
 			todo.push_back(input);
 		}
-
-
 	}
-
+	
 	return 0;
 }
 
