@@ -5,17 +5,34 @@
 #include <vector>
 #include <fstream>
 
-
 using namespace std;
 
-int main()
+int main(int argc, char* argv[])
 {
 	
 	vector<string> todo;
 	string input;
 	
-	cout << "**Welcome to simple TODO list. type 'exit' at any time to escape**\nTo remove a todo, type 'rm' before the number of the todo.\nTo view todos at any time, type 'ls' to list them numerical order.\nType 'print' to put the todos in a text file\nType 'purge' to remove all todos\nType 'clear' or 'cls' to clear screen.\n";
-	
+	if (argc == 2)
+	{
+		string input = argv[1];
+		ifstream myfile(input);
+
+		if (myfile.is_open())
+		{
+			string line;
+			cout << "Inputting " << input << "\n";
+			while(getline(myfile, line))
+				{
+				todo.push_back(line.substr(3));
+				}
+					myfile.close();	
+		}
+		else
+		{
+			cout << "Unable to open file " << input << "\n";
+		}
+	}
 	while (true)
 	{
 		int x = 0;
@@ -23,6 +40,8 @@ int main()
 		cout << "Enter here >> ";
 		getline(cin, input);
 		//exit
+		
+
 		if (input == "exit" || input == "EXIT") {
 			cout << "Bye Bye...";
 			return 0;
@@ -141,6 +160,10 @@ int main()
 				cout << "File " << fileName << ".txt" << " created!\n";
 			}
 			else cout << "There is nothing to print. Try adding some todos\n";
+		}
+		else if (input == "help" || input == "HELP")
+		{
+			cout << "**Welcome to simple TODO list. type 'exit' at any time to escape**\nTo remove a todo, type 'rm' before the number of the todo.\nTo view todos at any time, type 'ls' to list them numerical order.\nType 'print' to put the todos in a text file\nType 'purge' to remove all todos\nType 'clear' or 'cls' to clear screen.\n";
 		}
 		////////////////////////////////////////////////////////////////////////
 		else {
